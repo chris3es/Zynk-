@@ -6,10 +6,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
+<body class="theme-dark">
   <div class="app">
     <header>
-      <div class="logo">Zynk</div>
+      <div class="header-left">
+        <div class="logo">Zynk</div>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+          ☾
+        </button>
+      </div>
 
       <div class="header-actions">
         <div class="menu-icon" id="menuBtn">
@@ -18,32 +23,147 @@
           <span></span>
         </div>
 
-        <div class="profile-icon">
-          <img src="profile.png" alt="Profile" />
+        <div class="profile-icon" id="profileButton">
+          <img src="profile-default.png" alt="Profile" id="headerProfileImage" />
         </div>
       </div>
     </header>
 
     <!-- SIDEBAR -->
     <aside class="sidebar" id="sidebar">
-      <div class="sidebar-header">Menu</div>
+      <div class="sidebar-header">
+        <span>Menu</span>
+        <button class="sidebar-close" id="sidebarClose">✕</button>
+      </div>
 
-      <button class="sidebar-btn">Home</button>
-      <button class="sidebar-btn">Profile</button>
-      <button class="sidebar-btn">Messages</button>
-      <button class="sidebar-btn">Notifications</button>
-      <button class="sidebar-btn">Settings</button>
+      <button class="sidebar-btn" data-panel="feed">Home</button>
+      <button class="sidebar-btn" data-panel="profile">Profile</button>
+      <button class="sidebar-btn" data-panel="notifications">Notifications</button>
+      <button class="sidebar-btn" data-panel="settings">Settings</button>
 
       <hr />
 
-      <button class="sidebar-btn logout">Log Out</button>
+      <div class="sidebar-section">
+        <div class="sidebar-title">Account</div>
+        <button class="sidebar-btn" id="openAuth">Login / Sign Up</button>
+        <button class="sidebar-btn logout" id="logoutBtn">Log Out</button>
+      </div>
+
+      <p class="cookie-warning">
+        Never share screenshots of your cookies or session info.  
+        Someone could hijack your account.
+      </p>
     </aside>
 
-    <main class="feed" id="feed"></main>
+    <!-- MAIN PANELS -->
+    <main>
+      <!-- FEED PANEL -->
+      <section class="panel panel-active" id="panel-feed">
+        <main class="feed" id="feed"></main>
+      </section>
+
+      <!-- PROFILE PANEL -->
+      <section class="panel" id="panel-profile">
+        <div class="panel-inner">
+          <h2>Profile</h2>
+          <p id="profileInfo">Not logged in.</p>
+          <div class="profile-avatar-large">
+            <img src="profile-default.png" alt="Profile" id="profileMainImage" />
+          </div>
+          <div id="profileExtra"></div>
+        </div>
+      </section>
+
+      <!-- SETTINGS PANEL -->
+      <section class="panel" id="panel-settings">
+        <div class="panel-inner">
+          <h2>Settings</h2>
+          <p>Theme, account, and basic preferences.</p>
+
+          <div class="setting-item">
+            <span>Theme</span>
+            <button id="settingsThemeToggle" class="pill-btn">
+              Toggle Dark / Light
+            </button>
+          </div>
+
+          <div class="setting-item">
+            <span>Account</span>
+            <button id="settingsOpenAuth" class="pill-btn">
+              Manage Login / Sign Up
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- NOTIFICATIONS PANEL -->
+      <section class="panel" id="panel-notifications">
+        <div class="panel-inner">
+          <h2>Notifications</h2>
+          <ul id="notificationsList" class="notification-list">
+            <li>No notifications yet.</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <!-- BOTTOM NAV -->
+    <nav class="bottom-nav">
+      <button class="bottom-nav-btn" data-panel="feed">Home</button>
+      <button class="bottom-nav-btn" data-panel="notifications">Inbox</button>
+      <button class="bottom-nav-btn" data-panel="profile">Profile</button>
+      <button class="bottom-nav-btn" data-panel="settings">Settings</button>
+    </nav>
 
     <footer>
-      Frontend prototype · No login · No backend (yet)
+      Zynk prototype · Frontend only · Do not use real passwords
     </footer>
+  </div>
+
+  <!-- AUTH MODAL -->
+  <div class="modal-backdrop" id="authModalBackdrop">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="authTitle">Login / Sign Up</h2>
+        <button class="modal-close" id="authClose">✕</button>
+      </div>
+
+      <div class="modal-tabs">
+        <button class="modal-tab modal-tab-active" id="tabLogin">Login</button>
+        <button class="modal-tab" id="tabSignup">Sign Up</button>
+      </div>
+
+      <div class="modal-body">
+        <form id="loginForm" class="auth-form auth-form-active">
+          <label>
+            Username
+            <input type="text" id="loginUsername" required />
+          </label>
+          <label>
+            Password
+            <input type="password" id="loginPassword" required />
+          </label>
+          <button type="submit" class="primary-btn">Login</button>
+        </form>
+
+        <form id="signupForm" class="auth-form">
+          <label>
+            Username
+            <input type="text" id="signupUsername" required />
+          </label>
+          <label>
+            Password
+            <input type="password" id="signupPassword" required />
+          </label>
+          <button type="submit" class="primary-btn">Sign Up</button>
+        </form>
+
+        <p class="cookie-warning">
+          This demo stores a simple session cookie.  
+          Never share screenshots of cookies or storage data.
+        </p>
+      </div>
+    </div>
   </div>
 
   <script src="script.js"></script>
