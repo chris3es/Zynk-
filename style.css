@@ -32,6 +32,36 @@ header {
   z-index: 5;
 }
 
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.menu-icon {
+  width: 22px;
+  height: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.menu-icon span {
+  height: 3px;
+  width: 100%;
+  background: #c0c0ff;
+  border-radius: 3px;
+}
+
+.profile-icon img {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid #3b3b65;
+  object-fit: cover;
+}
+
 header .logo {
   font-weight: 700;
   letter-spacing: 0.08em;
