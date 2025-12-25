@@ -1,32 +1,27 @@
 const videos = [
   {
     id: 1,
-    creator: "@chris",
-    caption: "Insane crystal clutch in the void arena.",
+    creator: "@Zynk",
+    caption: "Welcome to Zynk!",
     track: "♬ Neon Dreams – Echoheart",
-    likes: 1280,
-    comments: 94,
-    shares: 31
+    likes: 12800,
+    comments: 0,
+    shares: 0
   },
-  {
-    id: 2,
-    creator: "@nova",
-    caption: "0.01s parkour finish, no cuts.",
-    track: "♬ Skyline Rush – Vanta",
-    likes: 842,
-    comments: 51,
-    shares: 18
-  },
-  {
-    id: 3,
-    creator: "@neko",
-    caption: "Building a cursed lobby in under 60 seconds.",
-    track: "♬ Midnight Glitch – LUX",
-    likes: 2310,
-    comments: 201,
-    shares: 77
-  }
 ];
+
+const menuBtn = document.getElementById("menuBtn");
+const sidebar = document.getElementById("sidebar");
+
+menuBtn.addEventListener("click", () => {
+  sidebar.classList.toggle("open");
+});
+
+document.addEventListener("click", (e) => {
+  if (!sidebar.contains(e.target) && !menuBtn.contains(e.target)) {
+    sidebar.classList.remove("open");
+  }
+});
 
 const feedEl = document.getElementById("feed");
 
