@@ -24,7 +24,7 @@
         </div>
 
         <div class="profile-icon" id="profileButton">
-          <img src="profile-default.png" alt="Profile" id="headerProfileImage" />
+          <img src="default.png" alt="Profile" id="headerProfileImage" />
         </div>
       </div>
     </header>
@@ -37,6 +37,7 @@
       </div>
 
       <button class="sidebar-btn" data-panel="feed">Home</button>
+      <button class="sidebar-btn" data-panel="upload">Upload</button>
       <button class="sidebar-btn" data-panel="profile">Profile</button>
       <button class="sidebar-btn" data-panel="notifications">Notifications</button>
       <button class="sidebar-btn" data-panel="settings">Settings</button>
@@ -62,15 +63,66 @@
         <main class="feed" id="feed"></main>
       </section>
 
+      <!-- UPLOAD PANEL -->
+      <section class="panel" id="panel-upload">
+        <div class="panel-inner">
+          <h2>Upload video</h2>
+          <p>Frontend only. Use a title and caption; video URL is optional placeholder.</p>
+
+          <form id="uploadForm" class="upload-form">
+            <label>
+              Title
+              <input type="text" id="uploadTitle" required />
+            </label>
+            <label>
+              Caption
+              <input type="text" id="uploadCaption" required />
+            </label>
+            <label>
+              Audio / Track
+              <input type="text" id="uploadTrack" placeholder="e.g. ♬ Neon Drift – Artist" />
+            </label>
+            <label>
+              Video URL (optional demo)
+              <input type="url" id="uploadUrl" placeholder="https://example.com/video.mp4" />
+            </label>
+            <button type="submit" class="primary-btn">Post</button>
+          </form>
+          <p class="cookie-warning">
+            This is a prototype. Videos are not actually uploaded to a server.
+          </p>
+        </div>
+      </section>
+
       <!-- PROFILE PANEL -->
       <section class="panel" id="panel-profile">
         <div class="panel-inner">
           <h2>Profile</h2>
           <p id="profileInfo">Not logged in.</p>
+
           <div class="profile-avatar-large">
-            <img src="profile-default.png" alt="Profile" id="profileMainImage" />
+            <img src="default.png" alt="Profile" id="profileMainImage" />
           </div>
-          <div id="profileExtra"></div>
+
+          <div class="profile-fields">
+            <label>
+              Display name
+              <input type="text" id="profileDisplayName" />
+            </label>
+            <label>
+              Bio
+              <textarea id="profileBio" rows="3"></textarea>
+            </label>
+          </div>
+
+          <p class="profile-note">
+            Profile image uses <strong>default.png</strong>.  
+            Users can replace this file later with their own image at a fixed size (e.g. 256×256).
+          </p>
+
+          <button id="saveProfile" class="primary-btn">Save profile</button>
+
+          <div id="profileExtra" class="profile-extra"></div>
         </div>
       </section>
 
@@ -78,7 +130,7 @@
       <section class="panel" id="panel-settings">
         <div class="panel-inner">
           <h2>Settings</h2>
-          <p>Theme, account, and basic preferences.</p>
+          <p>Theme, language, privacy, and account controls.</p>
 
           <div class="setting-item">
             <span>Theme</span>
@@ -88,9 +140,34 @@
           </div>
 
           <div class="setting-item">
+            <span>Language</span>
+            <select id="settingsLanguage" class="pill-select">
+              <option value="en">English</option>
+              <option value="es">Spanish</option>
+              <option value="de">German</option>
+              <option value="fr">French</option>
+            </select>
+          </div>
+
+          <div class="setting-item">
+            <span>Private account</span>
+            <label class="switch">
+              <input type="checkbox" id="settingsPrivate" />
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="setting-item">
             <span>Account</span>
             <button id="settingsOpenAuth" class="pill-btn">
               Manage Login / Sign Up
+            </button>
+          </div>
+
+          <div class="setting-item">
+            <span>Delete account</span>
+            <button id="deleteAccount" class="pill-btn danger">
+              Delete local account
             </button>
           </div>
         </div>
@@ -100,9 +177,8 @@
       <section class="panel" id="panel-notifications">
         <div class="panel-inner">
           <h2>Notifications</h2>
-          <ul id="notificationsList" class="notification-list">
-            <li>No notifications yet.</li>
-          </ul>
+          <button id="markAllRead" class="pill-btn">Mark all as read</button>
+          <ul id="notificationsList" class="notification-list"></ul>
         </div>
       </section>
     </main>
@@ -110,6 +186,7 @@
     <!-- BOTTOM NAV -->
     <nav class="bottom-nav">
       <button class="bottom-nav-btn" data-panel="feed">Home</button>
+      <button class="bottom-nav-btn" data-panel="upload">Upload</button>
       <button class="bottom-nav-btn" data-panel="notifications">Inbox</button>
       <button class="bottom-nav-btn" data-panel="profile">Profile</button>
       <button class="bottom-nav-btn" data-panel="settings">Settings</button>
@@ -143,7 +220,14 @@
             Password
             <input type="password" id="loginPassword" required />
           </label>
+          <label class="remember-row">
+            <input type="checkbox" id="loginRemember" />
+            <span>Remember me on this device</span>
+          </label>
           <button type="submit" class="primary-btn">Login</button>
+          <button type="button" id="fakeReset" class="pill-btn small">
+            Forgot password (demo)
+          </button>
         </form>
 
         <form id="signupForm" class="auth-form">
@@ -155,15 +239,24 @@
             Password
             <input type="password" id="signupPassword" required />
           </label>
+          <p class="auth-hint">
+            Usernames: 3–16 characters, letters/numbers/underscores only.  
+            Passwords: at least 6 characters.
+          </p>
           <button type="submit" class="primary-btn">Sign Up</button>
         </form>
 
         <p class="cookie-warning">
-          This demo stores a simple session cookie.  
-          Never share screenshots of cookies or storage data.
+          This demo stores a simple session using cookies and localStorage.  
+          Never share screenshots of cookies or storage data with anyone.
         </p>
       </div>
     </div>
+  </div>
+
+  <!-- LOADING OVERLAY -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="spinner"></div>
   </div>
 
   <script src="script.js"></script>
